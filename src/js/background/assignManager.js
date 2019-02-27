@@ -9,14 +9,22 @@ window.assignManager = {
     area: browser.storage.local,
     exemptedTabs: {},
 
+
+    siteKeyPathPatterns: {
+      'dev.azure.com': /^(\/[^/]*)/,
+    },
+
     getSiteStoreKey(pageUrlorUrlKey) {
       if (pageUrlorUrlKey.includes("siteContainerMap@@_")) return pageUrlorUrlKey;
       const url = new window.URL(pageUrlorUrlKey);
+      const pattern = this.siteKeyPathPatterns[url.hostname];
+      const match = pattern ? pattern.exec(url.pathname) : null;
+      const extra = match ? match[1] : '';
       const storagePrefix = "siteContainerMap@@_";
       if (url.port === "80" || url.port === "443") {
-        return `${storagePrefix}${url.hostname}`;
+        return `${storagePrefix}${url.hostname}${extra}`;
       } else {
-        return `${storagePrefix}${url.hostname}${url.port}`;
+        return `${storagePrefix}${url.hostname}${url.port}${extra}`;
       }
     },
 
