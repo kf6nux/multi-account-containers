@@ -688,20 +688,6 @@ Logic.registerPanel(P_CONTAINERS_LIST, {
     browser.tabs.onUpdated.removeListener(this.tabUpdateHandler);
   },
 
-  setupAssignmentCheckbox(siteSettings, currentUserContextId) {
-    const assignmentCheckboxElement = document.getElementById("container-page-assigned");
-    let checked = false;
-    if (siteSettings && Number(siteSettings.userContextId) === currentUserContextId) {
-      checked = true;
-    }
-    assignmentCheckboxElement.checked = checked;
-    let disabled = false;
-    if (siteSettings === false) {
-      disabled = true;
-    }
-    assignmentCheckboxElement.disabled = disabled;
-  },
-
   async prepareCurrentTabHeader() {
     const currentTab = await Logic.currentTab();
     const currentTabElement = document.getElementById("current-tab");
@@ -711,7 +697,6 @@ Logic.registerPanel(P_CONTAINERS_LIST, {
       Logic.setOrRemoveAssignment(currentTab.id, currentTab.url, currentTabUserContextId, !assignmentCheckboxElement.checked);
     });
     currentTabElement.hidden = !currentTab;
-    this.setupAssignmentCheckbox(false, currentTabUserContextId);
     if (currentTab) {
       const identity = await Logic.identity(currentTab.cookieStoreId);
       const siteSettings = await Logic.getAssignment(currentTab);
@@ -737,34 +722,56 @@ Logic.registerPanel(P_CONTAINERS_LIST, {
     Logic.identities().forEach(identity => {
       const hasTabs = (identity.hasHiddenTabs || identity.hasOpenTabs);
       const tr = document.createElement("tr");
-      const context = document.createElement("td");
-      const manage = document.createElement("td");
+      tr.classList.add("menu-item");
+      const td = document.createElement("td");
+      // const icon = document.createElement("div");
+      // const identityName = document.createElement("span");
+      // const leftMenu = document.createElement("span");
 
-      tr.classList.add("container-panel-row");
-
-      context.classList.add("userContext-wrapper", "open-newtab", "clickable", "firstTabindex");
-      manage.classList.add("show-tabs", "pop-button");
-      manage.setAttribute("title", `View ${identity.name} container`);
-      context.setAttribute("tabindex", "0");
-      context.setAttribute("title", `Create ${identity.name} tab`);
-      context.innerHTML = escaped`
-        <div class="userContext-icon-wrapper open-newtab">
+      td.innerHTML = escaped`          
+        <div class="menu-icon">
           <div class="usercontext-icon"
             data-identity-icon="${identity.icon}"
             data-identity-color="${identity.color}">
           </div>
         </div>
-        <div class="container-name truncate-text"></div>`;
-      context.querySelector(".container-name").textContent = identity.name;
-      manage.innerHTML = "<img src='/img/container-arrow.svg' class='show-tabs pop-button-image-small' />";
+        <span class="menu-text">${identity.name}</span>
+        <span class="menu-right-float">
+          <span class="container-count">22</span>
+          <span class="menu-arrow">
+            <img alt="Container Info" src="/img/arrow-icon-right.svg" />
+          </span>
+        </span>`;
+
+      // icon.classList.add("menu-icon");
+
+      // identityName.classList.add("menu-text");
+
+      // leftMenu.classList.add("menu-right-float");
+
+      // context.classList.add("userContext-wrapper", "open-newtab", "clickable", "firstTabindex");
+      // manage.classList.add("show-tabs", "pop-button");
+      // manage.setAttribute("title", `View ${identity.name} container`);
+      // context.setAttribute("tabindex", "0");
+      // context.setAttribute("title", `Create ${identity.name} tab`);
+      // context.innerHTML = escaped`
+      //   <div class="userContext-icon-wrapper open-newtab">
+      //     <div class="usercontext-icon"
+      //       data-identity-icon="${identity.icon}"
+      //       data-identity-color="${identity.color}">
+      //     </div>
+      //   </div>
+      //   <div class="container-name truncate-text"></div>`;
+      // context.querySelector(".container-name").textContent = identity.name;
+      // manage.innerHTML = "<img src='/img/container-arrow.svg' class='show-tabs pop-button-image-small' />";
 
       fragment.appendChild(tr);
 
-      tr.appendChild(context);
+      tr.appendChild(td);
 
-      if (hasTabs) {
-        tr.appendChild(manage);
-      }
+      // if (hasTabs) {
+      //   tr.appendChild(manage);
+      // }
 
       Logic.addEnterHandler(tr, async (e) => {
         if (e.target.matches(".open-newtab")
@@ -784,7 +791,7 @@ Logic.registerPanel(P_CONTAINERS_LIST, {
       });
     });
 
-    const list = document.querySelector(".identities-list tbody");
+    const list = document.querySelector("#identities-list");
 
     list.innerHTML = "";
     list.appendChild(fragment);
