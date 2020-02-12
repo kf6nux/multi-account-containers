@@ -91,7 +91,7 @@ table {
 }
 
 .scrollable {
-  border-block-start: 1px solid #f1f1f1;
+/*  border-block-start: 1px solid #f1f1f1;*/
   inline-size: 100%;
   max-block-size: 400px;
   overflow: auto;
@@ -995,9 +995,11 @@ body {
   /* remove  in prodcution*/
 }
 
-h3 {
+h3.title {
   width: 100%;
   color: #000000;
+  font-size: 13px;
+  letter-spacing: -0.1px;
   font-weight: bold;
   line-height: 40px;
   text-align: center;
@@ -1067,7 +1069,6 @@ h3 {
   width: 12px;
 }
 
-
 hr {
   display: block;
   border: 0;
@@ -1083,6 +1084,10 @@ hr {
   padding: 0 16px 0 16px;
 }
 
+.identities-list {
+  margin: 0 0 41px 0;
+}
+
 .bottom-btn {
   height: 41px;
   line-height: 41px;
@@ -1090,4 +1095,11 @@ hr {
   padding: 0 16px 0 16px;
   border: solid 1px #d9d9d9;
   cursor: pointer;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+}
+
+.menu-panel {
+  justify-content: flex-start;
 }

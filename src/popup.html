@@ -115,8 +115,8 @@
     <a href="#" id="achievement-done-button" class="onboarding-button">Done</a>
   </div>
 
-  <div class="panel container-panel hide" id="container-panel">
-    <h3>
+  <div class="panel menu-panel container-panel hide" id="container-panel">
+    <h3 class="title">
       Multi-Account Containers
     </h3>
     <hr>
@@ -164,40 +164,30 @@
     <div class="sub-header">
     Containers
     </div>
-    <table class="menu" id="identities-list">
-      <tr class="menu-item">
-        <td>
-          <div class="menu-icon">
-            <div class="usercontext-icon"
-              data-identity-icon="pet"
-              data-identity-color="blue">
+    <div class="scrollable identities-list">
+      <table class="menu" id="identities-list">
+        <tr class="menu-item">
+          <td>
+            <div class="menu-icon">
+              <div class="usercontext-icon"
+                data-identity-icon="pet"
+                data-identity-color="blue">
+              </div>
             </div>
-          </div>
-          <span class="menu-text">Default</span>
-          <span class="menu-right-float">
-            <span class="container-count">22</span>
-            <span class="menu-arrow">
-              <img alt="Container Info" src="/img/arrow-icon-right.svg" />
+            <span class="menu-text">Default</span>
+            <span class="menu-right-float">
+              <span class="container-count">22</span>
+              <span class="menu-arrow">
+                <img alt="Container Info" src="/img/arrow-icon-right.svg" />
+              </span>
             </span>
-          </span>
-        </td>
-      </tr>
-      <tr class="menu-item">
-        <td class="hover-highlight">
-          <span class="menu-icon">O</span>
-          <span class="menu-text">Personal</span>
-          <span class="menu-right-float">
-            <span class="container-count">7</span>
-            <span class="menu-arrow">
-              <img alt="Container Info" src="/img/arrow-icon-right.svg" />
-            </span>
-          </span>
-        </td>
-      </tr>
-    </table>
-    <div class="bottom-btn">
-      Manage Containers
+          </td>
+        </tr>
+      </table>
     </div>
+    <div class="bottom-btn" id="manage-containers-link">
+      Manage Containers
+    </div> 
   </div>
 
 

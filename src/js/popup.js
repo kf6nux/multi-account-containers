@@ -589,11 +589,7 @@ Logic.registerPanel(P_CONTAINERS_LIST, {
 
   // This method is called when the object is registered.
   async initialize() {
-    Logic.addEnterHandler(document.querySelector("#container-add-link"), () => {
-      Logic.showPanel(P_CONTAINER_EDIT, { name: Logic.generateIdentityName() });
-    });
-
-    Logic.addEnterHandler(document.querySelector("#edit-containers-link"), (e) => {
+    Logic.addEnterHandler(document.querySelector("#manage-containers-link"), (e) => {
       if (!e.target.classList.contains("disable-edit-containers")) {
         Logic.showPanel(P_CONTAINERS_EDIT);
       }
@@ -688,45 +684,15 @@ Logic.registerPanel(P_CONTAINERS_LIST, {
     browser.tabs.onUpdated.removeListener(this.tabUpdateHandler);
   },
 
-  async prepareCurrentTabHeader() {
-    const currentTab = await Logic.currentTab();
-    const currentTabElement = document.getElementById("current-tab");
-    const assignmentCheckboxElement = document.getElementById("container-page-assigned");
-    const currentTabUserContextId = Logic.userContextId(currentTab.cookieStoreId);
-    assignmentCheckboxElement.addEventListener("change", () => {
-      Logic.setOrRemoveAssignment(currentTab.id, currentTab.url, currentTabUserContextId, !assignmentCheckboxElement.checked);
-    });
-    currentTabElement.hidden = !currentTab;
-    if (currentTab) {
-      const identity = await Logic.identity(currentTab.cookieStoreId);
-      const siteSettings = await Logic.getAssignment(currentTab);
-      this.setupAssignmentCheckbox(siteSettings, currentTabUserContextId);
-      const currentPage = document.getElementById("current-page");
-      currentPage.innerHTML = escaped`<span class="page-title truncate-text">${currentTab.title}</span>`;
-      const favIconElement = Utils.createFavIconElement(currentTab.favIconUrl || "");
-      currentPage.prepend(favIconElement);
-
-      const currentContainer = document.getElementById("current-container");
-      currentContainer.innerText = identity.name;
-
-      currentContainer.setAttribute("data-identity-color", identity.color);
-    }
-  },
-
   // This method is called when the panel is shown.
   async prepare() {
     const fragment = document.createDocumentFragment();
-
-    this.prepareCurrentTabHeader();
 
     Logic.identities().forEach(identity => {
       const hasTabs = (identity.hasHiddenTabs || identity.hasOpenTabs);
       const tr = document.createElement("tr");
       tr.classList.add("menu-item");
       const td = document.createElement("td");
-      // const icon = document.createElement("div");
-      // const identityName = document.createElement("span");
-      // const leftMenu = document.createElement("span");
 
       td.innerHTML = escaped`          
         <div class="menu-icon">
@@ -743,35 +709,9 @@ Logic.registerPanel(P_CONTAINERS_LIST, {
           </span>
         </span>`;
 
-      // icon.classList.add("menu-icon");
-
-      // identityName.classList.add("menu-text");
-
-      // leftMenu.classList.add("menu-right-float");
-
-      // context.classList.add("userContext-wrapper", "open-newtab", "clickable", "firstTabindex");
-      // manage.classList.add("show-tabs", "pop-button");
-      // manage.setAttribute("title", `View ${identity.name} container`);
-      // context.setAttribute("tabindex", "0");
-      // context.setAttribute("title", `Create ${identity.name} tab`);
-      // context.innerHTML = escaped`
-      //   <div class="userContext-icon-wrapper open-newtab">
-      //     <div class="usercontext-icon"
-      //       data-identity-icon="${identity.icon}"
-      //       data-identity-color="${identity.color}">
-      //     </div>
-      //   </div>
-      //   <div class="container-name truncate-text"></div>`;
-      // context.querySelector(".container-name").textContent = identity.name;
-      // manage.innerHTML = "<img src='/img/container-arrow.svg' class='show-tabs pop-button-image-small' />";
-
       fragment.appendChild(tr);
 
       tr.appendChild(td);
-
-      // if (hasTabs) {
-      //   tr.appendChild(manage);
-      // }
 
       Logic.addEnterHandler(tr, async (e) => {
         if (e.target.matches(".open-newtab")
@@ -811,14 +751,6 @@ Logic.registerPanel(P_CONTAINERS_LIST, {
     document.addEventListener("mousedown", () => {
       document.removeEventListener("focus", focusHandler);
     });
-    /*  If no container is present disable the Edit Containers button */
-    const editContainer = document.querySelector("#edit-containers-link");
-    if (Logic.identities().length === 0) {
-      editContainer.classList.add("disable-edit-containers");
-    } else {
-      editContainer.classList.remove("disable-edit-containers");
-    }
-
     return Promise.resolve();
   },
 });
