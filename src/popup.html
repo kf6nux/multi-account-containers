@@ -121,18 +121,18 @@
     </h3>
     <hr>
     <table class="menu">
-      <tr class="menu-item">
+      <tr class="menu-item" id="open-new-tab-in">
         <td>
-          <span class="menu-icon">O</span>
+          <img class="menu-icon" alt="Open in New Tab" src="/img/tab-new-16.svg" />
           <span class="menu-text">Open New Tab in...</span>
             <span class="menu-arrow">
               <img alt="Container Info" src="/img/arrow-icon-right.svg" />
             </span>
         </td>
       </tr>
-      <tr class="menu-item">
+      <tr class="menu-item" id="reopen-site-in">
         <td>
-          <span class="menu-icon">X</span>
+          <img class="menu-icon" alt="Open in New Tab" src="/img/refresh-16.svg" />
           <span class="menu-text">Reopen This Site in...</span>
             <span class="menu-arrow">
               <img alt="Container Info" src="/img/arrow-icon-right.svg" />
@@ -142,17 +142,17 @@
     </table>
     <hr>
     <table class="menu">
-      <tr class="menu-item">
+      <tr class="menu-item" id="sort-containers-link">
         <td>
-          <div class="menu-icon"></div>
-          <span class="menu-text" id="sort-containers-link">Arrange Tabs by Container</span>
+          <img class="menu-icon" alt="Open in New Tab" src="/img/sort-16_1.svg" />
+          <span class="menu-text">Sort Tabs by Container</span>
             <span class="menu-arrow">
             </span>
         </td>
       </tr>
-      <tr class="menu-item">
+      <tr class="menu-item" id="always-open-in">
         <td>
-          <span class="menu-icon">O</span>
+          <img class="menu-icon" alt="Open in New Tab" src="/img/open-in-new-16.svg" />
           <span class="menu-text">Always Open This Site in...</span>
             <span class="menu-arrow">
               <img alt="Container Info" src="/img/arrow-icon-right.svg" />
@@ -215,19 +215,26 @@
   </div>
 
 
-  <div class="panel edit-containers-panel hide" id="edit-containers-panel">
-    <div class="panel-header">
-      <h3 class="panel-header-text">Edit Containers</h3>
-    </div>
-    <div class="scrollable panel-content">
-      <table class="unstriped">
-        <tbody id="edit-identities-list"></tbody>
+  <div class="panel container-picker-panel hide" id="container-picker-panel">
+    <h3 class="title">
+      Multi-Account Containers
+    </h3>
+    <hr>
+    <div class="scrollable identities-list">
+      <table class="menu" id="picker-identities-list">
+        <tr class="menu-item">
+          <td>
+            <div class="menu-icon">
+              <div class="usercontext-icon"
+                data-identity-icon="pet"
+                data-identity-color="blue">
+              </div>
+            </div>
+            <span class="menu-text">Default</span>
+          </td>
+        </tr>
       </table>
     </div>
-    <div class="panel-footer edit-containers-panel-footer">
-      <a href="#" id="exit-edit-mode-link" class="exit-edit-mode-link edit-containers-exit-text">
-      <img src="/img/container-arrow.svg"/>Exit Edit Mode</a>
-  </div>
   </div>
 
 
